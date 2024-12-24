@@ -1,7 +1,7 @@
 #   Aplicación de Finanzas Personales
 
 
-#   Tecnoloias
+#   Tecnologías
 1. Django
 **Propósito:** Es el framework principal para crear tu aplicación web.
 **Veredicto:** Esencial. Sin Django, no puedes construir el proyecto.
