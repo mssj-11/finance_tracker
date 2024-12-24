@@ -1,0 +1,18 @@
+<!-- expenses/templates/add_expense.html - Plantilla para agregar Gastos -->
+{% extends 'base.html' %}
+
+{% block title %}Añadir Gasto{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2>Añadir Gasto</h2>
+        <form method="post" action="{% url 'expenses:add_expense' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

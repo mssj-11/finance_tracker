@@ -1,0 +1,30 @@
+# Archivos de Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Base de datos SQLite
+db.sqlite3
+
+# Archivos estáticos
+/static/
+
+# Archivos de medios
+/media/
+
+# Archivos de entorno
+.env
+
+# Archivos de IDEs
+.vscode/
+.idea/
+
+# Otros
+*.log
+*.bak
+*.swp
+*.tmp

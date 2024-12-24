@@ -1,0 +1,19 @@
+div.dt-search{
+    padding: 10px 30px;
+    background: #f9f9f9;
+    border-radius: 25px;
+}
+
+div.dt-search input {
+    background: #f9f9f9;
+    border: none;
+}
+
+.table-primary{ --bs-table-bg: #0d6efd !important;  }
+.table-primary th{  padding: 20px !important;   }
+
+ul.pagination a {
+    color: #333;
+    background: transparent;
+    border: none;
+}

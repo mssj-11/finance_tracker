@@ -1,0 +1,58 @@
+<!-- expenses/templates/index.html - Plantilla Principal el proyecto -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Contenido Principal -->
+<div class="container mt-4">
+    <h2>Lista de Gastos</h2>
+    <a href="{% url 'expenses:add_expense' %}" class="btn btn-primary mt-2 mb-3">Agregar Nuevo Gasto</a>
+
+    {% if expenses %}
+        <div class="table-responsive bg-white p-4 shadow rounded">
+            <table id="expensesTable" class="table align-middle w-100 mb-4 mt-3" style="width:100%">
+                <thead class="table-primary">
+                    <tr>
+                        <th class="text-center text-white">Título</th>
+                        <th class="text-center text-white">Categoría</th>
+                        <th class="text-center text-white">Monto</th>
+                        <th class="text-center text-white">Fecha</th>
+                        <th class="text-center text-white">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                        <tr class="text-center">
+                            <td>{{ expense.title }}</td>
+                            <td>{{ expense.category }}</td>
+                            <td>${{ expense.amount|floatformat:2 }}</td>
+                            <td>{{ expense.date|date:"d-m-Y" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'expenses:edit_expense' expense.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{% url 'expenses:delete_expense' expense.id %}" class="btn btn-danger btn-sm delete-btn">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No hay gastos registrados.</p>
+    {% endif %}
+</div>
+
+
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.js"></script>
+    <script src="{% static 'js/datatables.js' %}"></script>
+    <!-- Sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/alert.js' %}"></script>
+
+
+{% endblock %}
