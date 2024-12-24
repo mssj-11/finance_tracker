@@ -22,7 +22,7 @@ pip install django sqlalchemy pandas matplotlib plotly xhtml2pdf
 ```
 Puedes optar esta version tambien:
 ```sh
-pip install django pandas plotly xhtml2pdf
+pip install django pandas plotly openpyxl xhtml2pdf
 ```
 ####	Registrar las dependencias instaladas
 ```sh

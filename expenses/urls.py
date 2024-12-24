@@ -2,6 +2,7 @@
 
 from django.urls import path
 from .views import ExpenseListView, ExpenseCreateView, ExpenseUpdateView, ExpenseDeleteView, DashboardView
+from . import views #Reportes
 
 # Definir el namespace 'expenses'
 app_name = "expenses"
@@ -21,4 +22,9 @@ urlpatterns = [
 
     # Ruta para ver el panel de estadísticas
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    
+    
+    # Exportacion de datos
+    path('export/excel/', views.export_to_excel, name='export_to_excel'),
+    path('export/pdf/', views.export_to_pdf, name='export_to_pdf'),
 ]

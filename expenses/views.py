@@ -1,7 +1,9 @@
 # expenses/views.py - Vistas de la aplicación "expenses"
 
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from xhtml2pdf import pisa
 from django.contrib import messages
 from django.views.generic import ListView
 from django.views import View
@@ -10,6 +12,7 @@ from django.db.models import Sum
 from .forms import ExpenseForm
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+import pandas as pd
 import logging
 
 # Configuración del logger para registrar eventos y errores
@@ -140,3 +143,52 @@ class DashboardView(View):
                 'highest_spending_category': None,
             })
 
+
+
+
+######   Exportacion de datos ######
+
+#   Reportes en Excel
+def export_to_excel(request):
+    # Obtener los datos del modelo
+    expenses = Expense.objects.all().values('title', 'category', 'amount', 'date')
+
+    # Crear un DataFrame de Pandas
+    df = pd.DataFrame(expenses)
+
+    # Renombrar columnas (opcional)
+    df.rename(columns={
+        'title': 'Título',
+        'category': 'Categoría',
+        'amount': 'Monto',
+        'date': 'Fecha'
+    }, inplace=True)
+
+    # Configurar la respuesta HTTP
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=expenses.xlsx'
+
+    # Exportar a Excel
+    df.to_excel(response, index=False, sheet_name='Gastos')
+
+    return response
+
+
+#   Reportes en PDF
+def export_to_pdf(request):
+    # Obtener los datos
+    expenses = Expense.objects.all()
+
+    # Renderizar la plantilla con los datos
+    html = render_to_string('expenses_pdf.html', {'expenses': expenses})
+
+    # Configurar la respuesta HTTP para PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=expenses.pdf'
+
+    # Convertir HTML a PDF
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Error al generar el PDF', status=500)
+
+    return response
